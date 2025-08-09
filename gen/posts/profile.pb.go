@@ -27,9 +27,10 @@ const (
 type Post struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PostID        int64                  `protobuf:"varint,1,opt,name=postID,proto3" json:"postID,omitempty"`
-	UserID        int64                  `protobuf:"varint,2,opt,name=userID,proto3" json:"userID,omitempty"` //ID пользователя
+	UserID        int64                  `protobuf:"varint,2,opt,name=userID,proto3" json:"userID,omitempty"`
 	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ImageUrl      []string               `protobuf:"bytes,4,rep,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -83,6 +84,13 @@ func (x *Post) GetContent() string {
 		return x.Content
 	}
 	return ""
+}
+
+func (x *Post) GetImageUrl() []string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return nil
 }
 
 func (x *Post) GetCreatedAt() *timestamppb.Timestamp {
@@ -199,8 +207,8 @@ func (x *CreatePostResponse) GetPostID() int64 {
 type GetPostsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserID        int64                  `protobuf:"varint,1,opt,name=userID,proto3" json:"userID,omitempty"`
-	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`                         // Номер страницы
-	PageSize      int32                  `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"` // Размер страницы
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int32                  `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -302,7 +310,7 @@ func (x *GetPostsResponse) GetPosts() []*Post {
 
 type UpdatePostRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PostID        int64                  `protobuf:"varint,1,opt,name=postID,proto3" json:"postID,omitempty"`                          // ID поста для обновления
+	PostID        int64                  `protobuf:"varint,1,opt,name=postID,proto3" json:"postID,omitempty"`
 	Post          *Post                  `protobuf:"bytes,2,opt,name=post,proto3" json:"post,omitempty"`                               // Новые значения для поста
 	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"` // Указывает, какие поля нужно обновить
 	unknownFields protoimpl.UnknownFields
@@ -362,7 +370,7 @@ func (x *UpdatePostRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 
 type UpdatePostResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Post          *Post                  `protobuf:"bytes,1,opt,name=post,proto3" json:"post,omitempty"` // Обновленный пост
+	Post          *Post                  `protobuf:"bytes,1,opt,name=post,proto3" json:"post,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -452,14 +460,16 @@ var File_profile_proto protoreflect.FileDescriptor
 
 const file_profile_proto_rawDesc = "" +
 	"\n" +
-	"\rprofile.proto\x12\aprofile\x1a\x17validate/validate.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa0\x01\n" +
+	"\rprofile.proto\x12\aprofile\x1a\x17validate/validate.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc7\x01\n" +
 	"\x04Post\x12\x16\n" +
 	"\x06postID\x18\x01 \x01(\x03R\x06postID\x12\x1f\n" +
 	"\x06userID\x18\x02 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userID\x12$\n" +
 	"\acontent\x18\x03 \x01(\tB\n" +
-	"\xfaB\ar\x05\x10\x03\x18\x90NR\acontent\x129\n" +
+	"\xfaB\ar\x05\x10\x03\x18\x90NR\acontent\x12%\n" +
+	"\timage_url\x18\x04 \x03(\tB\b\xfaB\x05\x92\x01\x02\x10\n" +
+	"R\bimageUrl\x129\n" +
 	"\n" +
-	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\x81\x01\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\x81\x01\n" +
 	"\x11CreatePostRequest\x12\x1f\n" +
 	"\x06userID\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userID\x12%\n" +
 	"\timage_url\x18\x02 \x03(\tB\b\xfaB\x05\x92\x01\x02\x10\n" +

@@ -80,6 +80,17 @@ func (m *Post) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if len(m.GetImageUrl()) > 10 {
+		err := PostValidationError{
+			field:  "ImageUrl",
+			reason: "value must contain no more than 10 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if all {
 		switch v := interface{}(m.GetCreatedAt()).(type) {
 		case interface{ ValidateAll() error }:
