@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package profile;
+
+option go_package = "oneway/posts/v1;postsv1";
+import "validate/validate.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+service PostService {
+  rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
+  rpc GetPosts(GetPostsRequest) returns (GetPostsResponse);
+  rpc UpdatePost(UpdatePostRequest) returns (UpdatePostResponse);
+  rpc DeletePost(DeletePostRequest) returns (DeletePostRequest);
+}
+
+message Post {
+  int64 postID = 1;
+  int64 userID = 2 [(validate.rules).int64 = {gt: 0}]; //ID пользователя
+  string content = 3 [(validate.rules).string = {min_len: 3, max_len: 10000}];
+  google.protobuf.Timestamp created_at = 4;
+}
+
+message CreatePostRequest {
+  int64 userID = 1 [(validate.rules).int64 = {gt: 0}];
+  repeated string image_url = 2 [(validate.rules).string = {uri: true, max_len: 2048}, (validate.rules).repeated = {max_items: 10}];
+  string content = 3 [(validate.rules).string = {min_len: 3, max_len: 10000}];
+}
+
+message CreatePostResponse {
+  int64 postID = 1;
+}
+
+message GetPostsRequest {
+  int64 userID = 1 [(validate.rules).int64 = {gt: 0}];
+  int32 page = 2; // Номер страницы
+  int32 page_size = 3; // Размер страницы
+}
+
+message GetPostsResponse {
+  repeated Post posts = 1;
+}
+
+message UpdatePostRequest {
+  int64 postID = 1 [(validate.rules).int64 = {gt: 0}]; // ID поста для обновления
+  Post post = 2 [(validate.rules).message = {required: true}]; // Новые значения для поста
+  google.protobuf.FieldMask update_mask = 3; // Указывает, какие поля нужно обновить
+}
+
+message UpdatePostResponse {
+  Post post = 1; // Обновленный пост
+}
+
+message DeletePostRequest {
+  int64 postID = 1 [(validate.rules).int64 = {gt: 0}];
+}
