@@ -11,31 +11,31 @@ service PostService {
   rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
   rpc GetPosts(GetPostsRequest) returns (GetPostsResponse);
   rpc UpdatePost(UpdatePostRequest) returns (UpdatePostResponse);
-  rpc DeletePost(DeletePostRequest) returns (DeletePostRequest);
+  rpc DeletePost(DeletePostRequest) returns (DeletePostResponse);
 }
 
 message Post {
-  int64 postID = 1;
-  int64 userID = 2 [(validate.rules).int64 = {gt: 0}]; 
+  int64 post_id = 1;
+  int64 user_id = 2 [(validate.rules).int64 = {gt: 0}]; 
   string content = 3 [(validate.rules).string = {min_len: 3, max_len: 10000}];
   repeated string image_url = 4 [(validate.rules).string = {uri: true, max_len: 2048}, (validate.rules).repeated = {max_items: 10}];
   google.protobuf.Timestamp created_at = 5;
 }
 
 message CreatePostRequest {
-  int64 userID = 1 [(validate.rules).int64 = {gt: 0}];
+  int64 user_id = 1 [(validate.rules).int64 = {gt: 0}];
   repeated string image_url = 2 [(validate.rules).string = {uri: true, max_len: 2048}, (validate.rules).repeated = {max_items: 10}];
   string content = 3 [(validate.rules).string = {min_len: 3, max_len: 10000}];
 }
 
 message CreatePostResponse {
-  int64 postID = 1;
+  int64 post_id = 1;
 }
 
 message GetPostsRequest {
-  int64 userID = 1 [(validate.rules).int64 = {gt: 0}];
-  int32 page = 2; 
-  int32 page_size = 3;
+  int64 user_id = 1 [(validate.rules).int64 = {gt: 0}];
+  int32 offset = 2; 
+  int32 limit = 3;
 }
 
 message GetPostsResponse {
@@ -43,7 +43,7 @@ message GetPostsResponse {
 }
 
 message UpdatePostRequest {
-  int64 postID = 1 [(validate.rules).int64 = {gt: 0}]; 
+  int64 post_id = 1 [(validate.rules).int64 = {gt: 0}]; 
   Post post = 2 [(validate.rules).message = {required: true}]; // Новые значения для поста
   google.protobuf.FieldMask update_mask = 3; // Указывает, какие поля нужно обновить
 }
@@ -53,5 +53,9 @@ message UpdatePostResponse {
 }
 
 message DeletePostRequest {
-  int64 postID = 1 [(validate.rules).int64 = {gt: 0}];
+  int64 post_id = 1 [(validate.rules).int64 = {gt: 0}];
+}
+
+message DeletePostResponse {
+  int64 post_id = 1;
 }
