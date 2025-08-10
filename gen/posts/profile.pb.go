@@ -26,8 +26,8 @@ const (
 
 type Post struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PostID        int64                  `protobuf:"varint,1,opt,name=postID,proto3" json:"postID,omitempty"`
-	UserID        int64                  `protobuf:"varint,2,opt,name=userID,proto3" json:"userID,omitempty"`
+	PostId        int64                  `protobuf:"varint,1,opt,name=post_id,json=postId,proto3" json:"post_id,omitempty"`
+	UserId        int64                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
 	ImageUrl      []string               `protobuf:"bytes,4,rep,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
@@ -65,16 +65,16 @@ func (*Post) Descriptor() ([]byte, []int) {
 	return file_profile_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Post) GetPostID() int64 {
+func (x *Post) GetPostId() int64 {
 	if x != nil {
-		return x.PostID
+		return x.PostId
 	}
 	return 0
 }
 
-func (x *Post) GetUserID() int64 {
+func (x *Post) GetUserId() int64 {
 	if x != nil {
-		return x.UserID
+		return x.UserId
 	}
 	return 0
 }
@@ -102,7 +102,7 @@ func (x *Post) GetCreatedAt() *timestamppb.Timestamp {
 
 type CreatePostRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserID        int64                  `protobuf:"varint,1,opt,name=userID,proto3" json:"userID,omitempty"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	ImageUrl      []string               `protobuf:"bytes,2,rep,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
 	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -139,9 +139,9 @@ func (*CreatePostRequest) Descriptor() ([]byte, []int) {
 	return file_profile_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreatePostRequest) GetUserID() int64 {
+func (x *CreatePostRequest) GetUserId() int64 {
 	if x != nil {
-		return x.UserID
+		return x.UserId
 	}
 	return 0
 }
@@ -162,7 +162,7 @@ func (x *CreatePostRequest) GetContent() string {
 
 type CreatePostResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PostID        int64                  `protobuf:"varint,1,opt,name=postID,proto3" json:"postID,omitempty"`
+	PostId        int64                  `protobuf:"varint,1,opt,name=post_id,json=postId,proto3" json:"post_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -197,18 +197,18 @@ func (*CreatePostResponse) Descriptor() ([]byte, []int) {
 	return file_profile_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *CreatePostResponse) GetPostID() int64 {
+func (x *CreatePostResponse) GetPostId() int64 {
 	if x != nil {
-		return x.PostID
+		return x.PostId
 	}
 	return 0
 }
 
 type GetPostsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserID        int64                  `protobuf:"varint,1,opt,name=userID,proto3" json:"userID,omitempty"`
-	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize      int32                  `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Offset        int32                  `protobuf:"varint,2,opt,name=offset,proto3" json:"offset,omitempty"`
+	Limit         int32                  `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -243,23 +243,23 @@ func (*GetPostsRequest) Descriptor() ([]byte, []int) {
 	return file_profile_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetPostsRequest) GetUserID() int64 {
+func (x *GetPostsRequest) GetUserId() int64 {
 	if x != nil {
-		return x.UserID
+		return x.UserId
 	}
 	return 0
 }
 
-func (x *GetPostsRequest) GetPage() int32 {
+func (x *GetPostsRequest) GetOffset() int32 {
 	if x != nil {
-		return x.Page
+		return x.Offset
 	}
 	return 0
 }
 
-func (x *GetPostsRequest) GetPageSize() int32 {
+func (x *GetPostsRequest) GetLimit() int32 {
 	if x != nil {
-		return x.PageSize
+		return x.Limit
 	}
 	return 0
 }
@@ -310,7 +310,7 @@ func (x *GetPostsResponse) GetPosts() []*Post {
 
 type UpdatePostRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PostID        int64                  `protobuf:"varint,1,opt,name=postID,proto3" json:"postID,omitempty"`
+	PostId        int64                  `protobuf:"varint,1,opt,name=post_id,json=postId,proto3" json:"post_id,omitempty"`
 	Post          *Post                  `protobuf:"bytes,2,opt,name=post,proto3" json:"post,omitempty"`                               // Новые значения для поста
 	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"` // Указывает, какие поля нужно обновить
 	unknownFields protoimpl.UnknownFields
@@ -347,9 +347,9 @@ func (*UpdatePostRequest) Descriptor() ([]byte, []int) {
 	return file_profile_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *UpdatePostRequest) GetPostID() int64 {
+func (x *UpdatePostRequest) GetPostId() int64 {
 	if x != nil {
-		return x.PostID
+		return x.PostId
 	}
 	return 0
 }
@@ -414,7 +414,7 @@ func (x *UpdatePostResponse) GetPost() *Post {
 
 type DeletePostRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PostID        int64                  `protobuf:"varint,1,opt,name=postID,proto3" json:"postID,omitempty"`
+	PostId        int64                  `protobuf:"varint,1,opt,name=post_id,json=postId,proto3" json:"post_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -449,9 +449,53 @@ func (*DeletePostRequest) Descriptor() ([]byte, []int) {
 	return file_profile_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *DeletePostRequest) GetPostID() int64 {
+func (x *DeletePostRequest) GetPostId() int64 {
 	if x != nil {
-		return x.PostID
+		return x.PostId
+	}
+	return 0
+}
+
+type DeletePostResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PostId        int64                  `protobuf:"varint,1,opt,name=post_id,json=postId,proto3" json:"post_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeletePostResponse) Reset() {
+	*x = DeletePostResponse{}
+	mi := &file_profile_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeletePostResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeletePostResponse) ProtoMessage() {}
+
+func (x *DeletePostResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_profile_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeletePostResponse.ProtoReflect.Descriptor instead.
+func (*DeletePostResponse) Descriptor() ([]byte, []int) {
+	return file_profile_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DeletePostResponse) GetPostId() int64 {
+	if x != nil {
+		return x.PostId
 	}
 	return 0
 }
@@ -460,47 +504,49 @@ var File_profile_proto protoreflect.FileDescriptor
 
 const file_profile_proto_rawDesc = "" +
 	"\n" +
-	"\rprofile.proto\x12\aprofile\x1a\x17validate/validate.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc7\x01\n" +
-	"\x04Post\x12\x16\n" +
-	"\x06postID\x18\x01 \x01(\x03R\x06postID\x12\x1f\n" +
-	"\x06userID\x18\x02 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userID\x12$\n" +
+	"\rprofile.proto\x12\aprofile\x1a\x17validate/validate.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc9\x01\n" +
+	"\x04Post\x12\x17\n" +
+	"\apost_id\x18\x01 \x01(\x03R\x06postId\x12 \n" +
+	"\auser_id\x18\x02 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userId\x12$\n" +
 	"\acontent\x18\x03 \x01(\tB\n" +
 	"\xfaB\ar\x05\x10\x03\x18\x90NR\acontent\x12%\n" +
 	"\timage_url\x18\x04 \x03(\tB\b\xfaB\x05\x92\x01\x02\x10\n" +
 	"R\bimageUrl\x129\n" +
 	"\n" +
-	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\x81\x01\n" +
-	"\x11CreatePostRequest\x12\x1f\n" +
-	"\x06userID\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userID\x12%\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\x82\x01\n" +
+	"\x11CreatePostRequest\x12 \n" +
+	"\auser_id\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userId\x12%\n" +
 	"\timage_url\x18\x02 \x03(\tB\b\xfaB\x05\x92\x01\x02\x10\n" +
 	"R\bimageUrl\x12$\n" +
 	"\acontent\x18\x03 \x01(\tB\n" +
-	"\xfaB\ar\x05\x10\x03\x18\x90NR\acontent\",\n" +
-	"\x12CreatePostResponse\x12\x16\n" +
-	"\x06postID\x18\x01 \x01(\x03R\x06postID\"c\n" +
-	"\x0fGetPostsRequest\x12\x1f\n" +
-	"\x06userID\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userID\x12\x12\n" +
-	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\x03 \x01(\x05R\bpageSize\"7\n" +
+	"\xfaB\ar\x05\x10\x03\x18\x90NR\acontent\"-\n" +
+	"\x12CreatePostResponse\x12\x17\n" +
+	"\apost_id\x18\x01 \x01(\x03R\x06postId\"a\n" +
+	"\x0fGetPostsRequest\x12 \n" +
+	"\auser_id\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userId\x12\x16\n" +
+	"\x06offset\x18\x02 \x01(\x05R\x06offset\x12\x14\n" +
+	"\x05limit\x18\x03 \x01(\x05R\x05limit\"7\n" +
 	"\x10GetPostsResponse\x12#\n" +
-	"\x05posts\x18\x01 \x03(\v2\r.profile.PostR\x05posts\"\x9e\x01\n" +
-	"\x11UpdatePostRequest\x12\x1f\n" +
-	"\x06postID\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06postID\x12+\n" +
+	"\x05posts\x18\x01 \x03(\v2\r.profile.PostR\x05posts\"\x9f\x01\n" +
+	"\x11UpdatePostRequest\x12 \n" +
+	"\apost_id\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06postId\x12+\n" +
 	"\x04post\x18\x02 \x01(\v2\r.profile.PostB\b\xfaB\x05\x8a\x01\x02\x10\x01R\x04post\x12;\n" +
 	"\vupdate_mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
 	"updateMask\"7\n" +
 	"\x12UpdatePostResponse\x12!\n" +
-	"\x04post\x18\x01 \x01(\v2\r.profile.PostR\x04post\"4\n" +
-	"\x11DeletePostRequest\x12\x1f\n" +
-	"\x06postID\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06postID2\xa2\x02\n" +
+	"\x04post\x18\x01 \x01(\v2\r.profile.PostR\x04post\"5\n" +
+	"\x11DeletePostRequest\x12 \n" +
+	"\apost_id\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06postId\"-\n" +
+	"\x12DeletePostResponse\x12\x17\n" +
+	"\apost_id\x18\x01 \x01(\x03R\x06postId2\xa3\x02\n" +
 	"\vPostService\x12E\n" +
 	"\n" +
 	"CreatePost\x12\x1a.profile.CreatePostRequest\x1a\x1b.profile.CreatePostResponse\x12?\n" +
 	"\bGetPosts\x12\x18.profile.GetPostsRequest\x1a\x19.profile.GetPostsResponse\x12E\n" +
 	"\n" +
-	"UpdatePost\x12\x1a.profile.UpdatePostRequest\x1a\x1b.profile.UpdatePostResponse\x12D\n" +
+	"UpdatePost\x12\x1a.profile.UpdatePostRequest\x1a\x1b.profile.UpdatePostResponse\x12E\n" +
 	"\n" +
-	"DeletePost\x12\x1a.profile.DeletePostRequest\x1a\x1a.profile.DeletePostRequestB\x19Z\x17oneway/posts/v1;postsv1b\x06proto3"
+	"DeletePost\x12\x1a.profile.DeletePostRequest\x1a\x1b.profile.DeletePostResponseB\x19Z\x17oneway/posts/v1;postsv1b\x06proto3"
 
 var (
 	file_profile_proto_rawDescOnce sync.Once
@@ -514,7 +560,7 @@ func file_profile_proto_rawDescGZIP() []byte {
 	return file_profile_proto_rawDescData
 }
 
-var file_profile_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_profile_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_profile_proto_goTypes = []any{
 	(*Post)(nil),                  // 0: profile.Post
 	(*CreatePostRequest)(nil),     // 1: profile.CreatePostRequest
@@ -524,28 +570,29 @@ var file_profile_proto_goTypes = []any{
 	(*UpdatePostRequest)(nil),     // 5: profile.UpdatePostRequest
 	(*UpdatePostResponse)(nil),    // 6: profile.UpdatePostResponse
 	(*DeletePostRequest)(nil),     // 7: profile.DeletePostRequest
-	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
-	(*fieldmaskpb.FieldMask)(nil), // 9: google.protobuf.FieldMask
+	(*DeletePostResponse)(nil),    // 8: profile.DeletePostResponse
+	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil), // 10: google.protobuf.FieldMask
 }
 var file_profile_proto_depIdxs = []int32{
-	8, // 0: profile.Post.created_at:type_name -> google.protobuf.Timestamp
-	0, // 1: profile.GetPostsResponse.posts:type_name -> profile.Post
-	0, // 2: profile.UpdatePostRequest.post:type_name -> profile.Post
-	9, // 3: profile.UpdatePostRequest.update_mask:type_name -> google.protobuf.FieldMask
-	0, // 4: profile.UpdatePostResponse.post:type_name -> profile.Post
-	1, // 5: profile.PostService.CreatePost:input_type -> profile.CreatePostRequest
-	3, // 6: profile.PostService.GetPosts:input_type -> profile.GetPostsRequest
-	5, // 7: profile.PostService.UpdatePost:input_type -> profile.UpdatePostRequest
-	7, // 8: profile.PostService.DeletePost:input_type -> profile.DeletePostRequest
-	2, // 9: profile.PostService.CreatePost:output_type -> profile.CreatePostResponse
-	4, // 10: profile.PostService.GetPosts:output_type -> profile.GetPostsResponse
-	6, // 11: profile.PostService.UpdatePost:output_type -> profile.UpdatePostResponse
-	7, // 12: profile.PostService.DeletePost:output_type -> profile.DeletePostRequest
-	9, // [9:13] is the sub-list for method output_type
-	5, // [5:9] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	9,  // 0: profile.Post.created_at:type_name -> google.protobuf.Timestamp
+	0,  // 1: profile.GetPostsResponse.posts:type_name -> profile.Post
+	0,  // 2: profile.UpdatePostRequest.post:type_name -> profile.Post
+	10, // 3: profile.UpdatePostRequest.update_mask:type_name -> google.protobuf.FieldMask
+	0,  // 4: profile.UpdatePostResponse.post:type_name -> profile.Post
+	1,  // 5: profile.PostService.CreatePost:input_type -> profile.CreatePostRequest
+	3,  // 6: profile.PostService.GetPosts:input_type -> profile.GetPostsRequest
+	5,  // 7: profile.PostService.UpdatePost:input_type -> profile.UpdatePostRequest
+	7,  // 8: profile.PostService.DeletePost:input_type -> profile.DeletePostRequest
+	2,  // 9: profile.PostService.CreatePost:output_type -> profile.CreatePostResponse
+	4,  // 10: profile.PostService.GetPosts:output_type -> profile.GetPostsResponse
+	6,  // 11: profile.PostService.UpdatePost:output_type -> profile.UpdatePostResponse
+	8,  // 12: profile.PostService.DeletePost:output_type -> profile.DeletePostResponse
+	9,  // [9:13] is the sub-list for method output_type
+	5,  // [5:9] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_profile_proto_init() }
@@ -559,7 +606,7 @@ func file_profile_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_profile_proto_rawDesc), len(file_profile_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

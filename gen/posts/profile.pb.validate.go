@@ -56,11 +56,11 @@ func (m *Post) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PostID
+	// no validation rules for PostId
 
-	if m.GetUserID() <= 0 {
+	if m.GetUserId() <= 0 {
 		err := PostValidationError{
-			field:  "UserID",
+			field:  "UserId",
 			reason: "value must be greater than 0",
 		}
 		if !all {
@@ -219,9 +219,9 @@ func (m *CreatePostRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetUserID() <= 0 {
+	if m.GetUserId() <= 0 {
 		err := CreatePostRequestValidationError{
-			field:  "UserID",
+			field:  "UserId",
 			reason: "value must be greater than 0",
 		}
 		if !all {
@@ -354,7 +354,7 @@ func (m *CreatePostResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PostID
+	// no validation rules for PostId
 
 	if len(errors) > 0 {
 		return CreatePostResponseMultiError(errors)
@@ -458,9 +458,9 @@ func (m *GetPostsRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetUserID() <= 0 {
+	if m.GetUserId() <= 0 {
 		err := GetPostsRequestValidationError{
-			field:  "UserID",
+			field:  "UserId",
 			reason: "value must be greater than 0",
 		}
 		if !all {
@@ -469,9 +469,9 @@ func (m *GetPostsRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for Page
+	// no validation rules for Offset
 
-	// no validation rules for PageSize
+	// no validation rules for Limit
 
 	if len(errors) > 0 {
 		return GetPostsRequestMultiError(errors)
@@ -707,9 +707,9 @@ func (m *UpdatePostRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetPostID() <= 0 {
+	if m.GetPostId() <= 0 {
 		err := UpdatePostRequestValidationError{
-			field:  "PostID",
+			field:  "PostId",
 			reason: "value must be greater than 0",
 		}
 		if !all {
@@ -1020,9 +1020,9 @@ func (m *DeletePostRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetPostID() <= 0 {
+	if m.GetPostId() <= 0 {
 		err := DeletePostRequestValidationError{
-			field:  "PostID",
+			field:  "PostId",
 			reason: "value must be greater than 0",
 		}
 		if !all {
@@ -1110,3 +1110,107 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeletePostRequestValidationError{}
+
+// Validate checks the field values on DeletePostResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeletePostResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeletePostResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeletePostResponseMultiError, or nil if none found.
+func (m *DeletePostResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeletePostResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for PostId
+
+	if len(errors) > 0 {
+		return DeletePostResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeletePostResponseMultiError is an error wrapping multiple validation errors
+// returned by DeletePostResponse.ValidateAll() if the designated constraints
+// aren't met.
+type DeletePostResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeletePostResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeletePostResponseMultiError) AllErrors() []error { return m }
+
+// DeletePostResponseValidationError is the validation error returned by
+// DeletePostResponse.Validate if the designated constraints aren't met.
+type DeletePostResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeletePostResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeletePostResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeletePostResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeletePostResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeletePostResponseValidationError) ErrorName() string {
+	return "DeletePostResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeletePostResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeletePostResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeletePostResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeletePostResponseValidationError{}
