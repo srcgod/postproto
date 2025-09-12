@@ -1,30 +1,40 @@
+
 syntax = "proto3";
 
 package profile;
 
-option go_package = "oneway/posts/v1;postsv1";
-import "validate/validate.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+option go_package = "oneway/posts/v1;postsv1";
 
 service PostService {
   rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
   rpc GetPosts(GetPostsRequest) returns (GetPostsResponse);
   rpc UpdatePost(UpdatePostRequest) returns (UpdatePostResponse);
   rpc DeletePost(DeletePostRequest) returns (DeletePostResponse);
+  rpc LikePost(LikePostRequest) returns (Empty);
 }
 
 message Post {
   int64 post_id = 1;
   int64 user_id = 2 [(validate.rules).int64 = {gt: 0}]; 
   string content = 3 [(validate.rules).string = {min_len: 3, max_len: 10000}];
-  repeated string image_url = 4 [(validate.rules).string = {uri: true, max_len: 2048}, (validate.rules).repeated = {max_items: 10}];
+  repeated string image_urls = 4 [(validate.rules).string = {uri: true, max_len: 2048}, (validate.rules).repeated = {max_items: 10}];
   google.protobuf.Timestamp created_at = 5;
+}
+
+message LikePostRequest {
+  int64 post_id = 1;
+}
+
+message Empty {
 }
 
 message CreatePostRequest {
   int64 user_id = 1 [(validate.rules).int64 = {gt: 0}];
-  repeated string image_url = 2 [(validate.rules).string = {uri: true, max_len: 2048}, (validate.rules).repeated = {max_items: 10}];
+  repeated string image_urls = 2 [(validate.rules).string = {uri: true, max_len: 2048}, (validate.rules).repeated = {max_items: 10}];
   string content = 3 [(validate.rules).string = {min_len: 3, max_len: 10000}];
 }
 
