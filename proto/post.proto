@@ -12,6 +12,7 @@ service PostService {
   rpc GetPosts(GetPostsRequest) returns (GetPostsResponse);
   rpc UpdatePost(UpdatePostRequest) returns (UpdatePostResponse);
   rpc DeletePost(DeletePostRequest) returns (DeletePostResponse);
+  rpc LikePost(LikePostRequest) returns (Empty);
 }
 
 message Post {
@@ -20,6 +21,12 @@ message Post {
   string content = 3 [(validate.rules).string = {min_len: 3, max_len: 10000}];
   repeated string image_url = 4 [(validate.rules).string = {uri: true, max_len: 2048}, (validate.rules).repeated = {max_items: 10}];
   google.protobuf.Timestamp created_at = 5;
+  uint64 likes = 6;
+}
+
+message Empty {} 
+message LikePostRequest {
+  int64 post_id = 1;
 }
 
 message CreatePostRequest {
@@ -44,8 +51,8 @@ message GetPostsResponse {
 
 message UpdatePostRequest {
   int64 post_id = 1 [(validate.rules).int64 = {gt: 0}]; 
-  Post post = 2 [(validate.rules).message = {required: true}]; // Новые значения для поста
-  google.protobuf.FieldMask update_mask = 3; // Указывает, какие поля нужно обновить
+  Post post = 2 [(validate.rules).message = {required: true}]; 
+  google.protobuf.FieldMask update_mask = 3; 
 }
 
 message UpdatePostResponse {

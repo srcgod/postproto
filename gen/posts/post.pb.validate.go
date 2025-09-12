@@ -120,6 +120,8 @@ func (m *Post) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for Likes
+
 	if len(errors) > 0 {
 		return PostMultiError(errors)
 	}
@@ -196,6 +198,206 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PostValidationError{}
+
+// Validate checks the field values on Empty with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Empty) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Empty with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in EmptyMultiError, or nil if none found.
+func (m *Empty) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Empty) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return EmptyMultiError(errors)
+	}
+
+	return nil
+}
+
+// EmptyMultiError is an error wrapping multiple validation errors returned by
+// Empty.ValidateAll() if the designated constraints aren't met.
+type EmptyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m EmptyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m EmptyMultiError) AllErrors() []error { return m }
+
+// EmptyValidationError is the validation error returned by Empty.Validate if
+// the designated constraints aren't met.
+type EmptyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e EmptyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e EmptyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e EmptyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e EmptyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e EmptyValidationError) ErrorName() string { return "EmptyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e EmptyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sEmpty.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = EmptyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = EmptyValidationError{}
+
+// Validate checks the field values on LikePostRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *LikePostRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on LikePostRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// LikePostRequestMultiError, or nil if none found.
+func (m *LikePostRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *LikePostRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for PostId
+
+	if len(errors) > 0 {
+		return LikePostRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// LikePostRequestMultiError is an error wrapping multiple validation errors
+// returned by LikePostRequest.ValidateAll() if the designated constraints
+// aren't met.
+type LikePostRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m LikePostRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m LikePostRequestMultiError) AllErrors() []error { return m }
+
+// LikePostRequestValidationError is the validation error returned by
+// LikePostRequest.Validate if the designated constraints aren't met.
+type LikePostRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LikePostRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LikePostRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LikePostRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LikePostRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LikePostRequestValidationError) ErrorName() string { return "LikePostRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LikePostRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLikePostRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LikePostRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LikePostRequestValidationError{}
 
 // Validate checks the field values on CreatePostRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
