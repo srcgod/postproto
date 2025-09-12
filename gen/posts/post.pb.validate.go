@@ -120,6 +120,8 @@ func (m *Post) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for Likes
+
 	if len(errors) > 0 {
 		return PostMultiError(errors)
 	}

@@ -23,6 +23,7 @@ message Post {
   string content = 3 [(validate.rules).string = {min_len: 3, max_len: 10000}];
   repeated string image_urls = 4 [(validate.rules).string = {uri: true, max_len: 2048}, (validate.rules).repeated = {max_items: 10}];
   google.protobuf.Timestamp created_at = 5;
+  int64 likes = 6;
 }
 
 message LikePostRequest {
